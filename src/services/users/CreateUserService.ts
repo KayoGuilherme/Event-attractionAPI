@@ -1,18 +1,12 @@
 import { PrismaClient } from "@prisma/client";
 import { z } from "zod";
 import * as bcrypt from "bcryptjs";
+import { UserEntity } from "../../entities/userEntity";
 
 const prisma = new PrismaClient();
 
-export interface UserData {
-  name: string;
-  email: string;
-  CPF: string;
-  password: string;
-}
-
 export class CreateUserService {
-  async execute({ name, email, password, CPF }: UserData) {
+  async execute({ name, email, password, CPF }: UserEntity) {
     if (!email) {
       throw new Error("Email cannot be empty!");
     }

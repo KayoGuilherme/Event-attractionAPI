@@ -1,12 +1,12 @@
-import { Request, Response } from "express";
+import { Response } from "express";
 import { GetUserService } from "../../services/users/GetUserService";
 
 export class GetUsersController {
-  async handle(req: Request, res: Response) {
-    const getUserService = new GetUserService();
+  constructor(private getUserService: GetUserService) {}
 
+  async handle(res: Response) {
     try {
-      const users = await getUserService.execute();
+      const users = await this.getUserService.execute();
       return res.json(users);
     } catch (error) {
       console.log(error);

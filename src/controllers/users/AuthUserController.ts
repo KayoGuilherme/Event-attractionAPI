@@ -31,11 +31,15 @@ const RegisterDataValidation = z.object({
 });
 
 class AuthUserController {
+  constructor(
+    private authService: AuthService,
+    private registerService: CreateUserService
+  ) {}
+
   async handle(req: Request, res: Response) {
     try {
       const authData = AuthDataValidation.parse(req.body);
-      const createAuthService = new AuthService();
-      const user = await createAuthService.execute(authData);
+      const user = await this.authService.execute(authData);
 
       return res.json(user);
     } catch (error) {
@@ -50,9 +54,8 @@ class AuthUserController {
   async handleRegister(req: Request, res: Response) {
     try {
       const registerData = RegisterDataValidation.parse(req.body);
-      const registerAuthService = new CreateUserService();
-      const user = await registerAuthService.execute(registerData);
-      return res.json(user);
+      await this.registerService.execute(registerData);
+      return res.json({ register: true });
     } catch (error) {
       if (error instanceof ZodError) {
         const errors = zodErrosMap(error);

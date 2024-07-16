@@ -1,9 +1,9 @@
-import { Request, Response } from "express";
-import { CreateUserService } from "../../services/users/CreateUserService";
 import { z, ZodError } from "zod";
+import { UpdateUserService } from "../../services/users/UpdateUserService";
 import { zodErrosMap } from "../../config/zodErrorMap";
+import { Request, Response } from "express";
 
-const createUserValidation = z.object({
+const UpdateUserValidation = z.object({
   name: z.string().nonempty({ message: "Campo nome é Obrigatorio." }),
   email: z
     .string()
@@ -20,14 +20,18 @@ const createUserValidation = z.object({
     .nonempty({ message: "Campo password é obrigatorio." }),
 });
 
-class CreateUserController {
-  constructor(private createUserService: CreateUserService) {}
+const ParamIdValidation = z.object({
+  id: z.string().transform((val) => Number(val)),
+});
+
+export class UpdateUserController {
+  constructor(private updateUserController: UpdateUserService) {}
 
   async handle(req: Request, res: Response) {
     try {
-      const userData = createUserValidation.parse(req.body);
-
-      await this.createUserService.execute(userData);
+      const paramId = ParamIdValidation.parse(req.params);
+      const updateData = UpdateUserValidation.parse(req.body);
+      await this.updateUserController.execute(updateData, Number(paramId.id));
 
       return res.json({ sucess: true });
     } catch (error) {
@@ -39,4 +43,3 @@ class CreateUserController {
     }
   }
 }
-export { CreateUserController };
