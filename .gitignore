@@ -3,3 +3,7 @@ node_modules
 .env
 
 .vscode
+
+# docker envuronment
+.dockerignore
+/docker-compose.yml
