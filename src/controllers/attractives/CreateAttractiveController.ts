@@ -1,16 +1,17 @@
 import { z, ZodError } from "zod";
+import { CreateAttractionsService } from "../../services/attractives/CreateAttractionsService";
 import { zodErrosMap } from "../../config/zodErrorMap";
 import { Request, Response } from "express";
-import { DeleteUserService } from "../../services/users/DeleteUserService";
-import { ParamIdValidation } from "../../ValidatorsZod/paramIdValidation";
+import { createAttractiveValidation } from "../../ValidatorsZod/Attractive/createAttractiveValidation";
 
 
-export class DeleteUserController {
+
+export class CreateAttractiveController {
   async handle(req: Request, res: Response) {
+    const createAttractiveService = new CreateAttractionsService();
     try {
-      const paramId = ParamIdValidation.parse(req.params);
-      const updateService = new DeleteUserService();
-      await updateService.execute(paramId);
+      const data = createAttractiveValidation.parse(req.body);
+      const createEvent = createAttractiveService.execute(data);
       return res.json({ sucess: true });
     } catch (error) {
       if (error instanceof ZodError) {
