@@ -52,7 +52,7 @@ CREATE TABLE `attractions` (
 CREATE TABLE `Inscription` (
     `id` INTEGER NOT NULL AUTO_INCREMENT,
     `name` VARCHAR(191) NOT NULL,
-    `age` VARCHAR(191) NOT NULL,
+    `age` INTEGER NOT NULL,
     `attractionId` INTEGER NOT NULL,
 
     PRIMARY KEY (`id`)

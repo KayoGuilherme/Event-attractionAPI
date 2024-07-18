@@ -15,6 +15,11 @@ import { GetAttractiveByIdController } from "./controllers/attractives/GetAttrac
 import { CreateAttractiveController } from "./controllers/attractives/CreateAttractiveController";
 import { UpdateAttractiveController } from "./controllers/attractives/UpdateAttractiveController";
 import { DeleteAttractiveController } from "./controllers/attractives/DeleteAttractiveController";
+import { GetInscriptionsController } from "./controllers/inscriptions/getInscriptionController";
+import { GetInscriptionByIdController } from "./controllers/inscriptions/getInscriptionByIdController";
+import { CreateInscriptionController } from "./controllers/inscriptions/createInscriptionController";
+import { UpdateInscriptionController } from "./controllers/inscriptions/updateInscriptionController";
+import { DeleteInscriptionController } from "./controllers/inscriptions/deleteInscriptionController";
 
 export const router = Router();
 
@@ -31,10 +36,10 @@ router.post("/register", new AuthUserController().handleRegister);
 
 //eventos
 router.get("/event", isAuthenticated, new GetEventController().handle)
-router.get("/event/:id", isAuthenticated, new GetEventByIdController().handle);
+router.get("/event/:id_event", isAuthenticated, new GetEventByIdController().handle);
 router.post("/event", isAuthenticated, new CreateEventController().handle);
-router.put("/event/:id", isAuthenticated, new UpdateEventController().handle);
-router.delete("/event/:id", isAuthenticated, new DeleteEventController().handle);
+router.put("/event/:id_event", isAuthenticated, new UpdateEventController().handle);
+router.delete("/event/:id_event", isAuthenticated, new DeleteEventController().handle);
 
 
 //atrações
@@ -45,3 +50,9 @@ router.put("/attractions/:id", isAuthenticated, new UpdateAttractiveController()
 router.delete("/attractions/:id", isAuthenticated, new DeleteAttractiveController().handle)
 
 
+//inscrições 
+router.get("/inscriptions", isAuthenticated, new GetInscriptionsController().handle)
+router.get("/inscriptions/:id", isAuthenticated, new GetInscriptionByIdController().handle)
+router.post("/inscription", isAuthenticated, new CreateInscriptionController().handle)
+router.put("/inscriptions/:id", isAuthenticated, new UpdateInscriptionController().handle)
+router.delete("/inscriptions/:id", isAuthenticated, new DeleteInscriptionController().handle)

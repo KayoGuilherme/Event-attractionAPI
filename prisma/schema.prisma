@@ -51,7 +51,7 @@ model attractions {
 model Inscription {
   id           Int         @id @default(autoincrement())
   name         String
-  age          String
+  age          Int
   attractionId Int
   attraction   attractions @relation(fields: [attractionId], references: [id])
 }
