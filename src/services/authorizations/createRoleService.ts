@@ -1,4 +1,4 @@
-import { PrismaClient } from "@prisma/client";
+import { PrismaClient } from "@prisma/client"; 
 import { AuthorizationEntity } from "../../entities/authorizationEntity";
 
 const prisma = new PrismaClient();

@@ -20,6 +20,8 @@ import { GetInscriptionByIdController } from "./controllers/inscriptions/getInsc
 import { CreateInscriptionController } from "./controllers/inscriptions/createInscriptionController";
 import { UpdateInscriptionController } from "./controllers/inscriptions/updateInscriptionController";
 import { DeleteInscriptionController } from "./controllers/inscriptions/deleteInscriptionController";
+import { createRoleController } from "./controllers/authorizations/createRoleController";
+import { UpdateRoleController } from "./controllers/authorizations/updateRoleController";
 
 export const router = Router();
 
@@ -56,3 +58,9 @@ router.get("/inscriptions/:id", isAuthenticated, new GetInscriptionByIdControlle
 router.post("/inscription", isAuthenticated, new CreateInscriptionController().handle)
 router.put("/inscriptions/:id", isAuthenticated, new UpdateInscriptionController().handle)
 router.delete("/inscriptions/:id", isAuthenticated, new DeleteInscriptionController().handle)
+
+
+
+//authorization
+router.post("/role", isAuthenticated, new createRoleController().handle)
+router.put("/role/:id_role", isAuthenticated, new UpdateRoleController().handle);
