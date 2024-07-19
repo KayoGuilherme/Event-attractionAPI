@@ -4,14 +4,17 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev src/main.ts"
+    "dev": "ts-node-dev src/index.ts",
+    "build": "tsc",
+    "postbuild": "prisma generate && prisma migrate deploy",
+    "start": "node dist/index.js"
   },
   "devDependencies": {
     "@types/bcryptjs": "^2.4.2",
     "@types/cors": "^2.8.12",
     "@types/express": "^4.17.13",
     "@types/jsonwebtoken": "^8.5.8",
-    "@types/multer": "^1.4.7",
+    "@types/multer": "^1.4.11",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.5.3"
   },
@@ -25,8 +28,8 @@
     "jsonwebtoken": "^8.5.1",
     "multer": "^1.4.4",
     "prisma": "^3.9.2",
+    "tesseract.js": "^5.1.0",
     "ts-node": "^10.9.2",
-    "zod": "^3.23.8",
-    "zod-i18n-map": "^2.27.0"
+    "zod": "^3.23.8"
   }
 }

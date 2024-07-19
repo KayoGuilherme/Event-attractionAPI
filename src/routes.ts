@@ -22,6 +22,7 @@ import { UpdateInscriptionController } from "./controllers/inscriptions/updateIn
 import { DeleteInscriptionController } from "./controllers/inscriptions/deleteInscriptionController";
 import { createRoleController } from "./controllers/authorizations/createRoleController";
 import { UpdateRoleController } from "./controllers/authorizations/updateRoleController";
+import upload from "./config/configMulter";
 
 export const router = Router();
 
@@ -55,7 +56,7 @@ router.delete("/attractions/:id", isAuthenticated, new DeleteAttractiveControlle
 //inscrições 
 router.get("/inscriptions", isAuthenticated, new GetInscriptionsController().handle)
 router.get("/inscriptions/:id", isAuthenticated, new GetInscriptionByIdController().handle)
-router.post("/inscription", isAuthenticated, new CreateInscriptionController().handle)
+router.post("/inscription", isAuthenticated,  upload.single("rgImage"),new CreateInscriptionController().handle)
 router.put("/inscriptions/:id", isAuthenticated, new UpdateInscriptionController().handle)
 router.delete("/inscriptions/:id", isAuthenticated, new DeleteInscriptionController().handle)
 
