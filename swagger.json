@@ -1,0 +1,754 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "API para Anúncio de Eventos",
+    "description": "EventsAPI tem como objetivo manipular anúncios de eventos e suas inscrições com validações seguras.",
+    "version": "1.0.0",
+    "contact": {
+      "email": "priizy1256@gmail.com"
+    }
+  },
+  "paths": {
+    "/users": {
+      "post": {
+        "summary": "Cria um novo usuário",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "CPF": { "type": "string" },
+                  "password": { "type": "string" },
+                  "roleId": { "type": "integer" }
+                },
+                "required": ["name", "email", "CPF", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuário criado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      },
+      "get": {
+        "summary": "Obtém a lista de usuários",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Lista de usuários",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/User"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "put": {
+        "summary": "Atualiza um usuário existente",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "CPF": { "type": "string" },
+                  "password": { "type": "string" },
+                  "roleId": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Usuário atualizado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um usuário existente",
+        "tags": ["Users"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Usuário deletado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/session": {
+      "post": {
+        "summary": "Autentica um usuário",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "email": { "type": "string" },
+                  "password": { "type": "string" }
+                },
+                "required": ["email", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Autenticação bem-sucedida"
+          },
+          "401": {
+            "description": "Não autorizado"
+          }
+        }
+      }
+    },
+    "/register": {
+      "post": {
+        "summary": "Registra um novo usuário",
+        "tags": ["Authentication"],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "email": { "type": "string" },
+                  "CPF": { "type": "string" },
+                  "password": { "type": "string" },
+                  "roleId": { "type": "integer" }
+                },
+                "required": ["name", "email", "CPF", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Registro bem-sucedido"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/event": {
+      "get": {
+        "summary": "Obtém a lista de eventos",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Lista de eventos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Event"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria um novo evento",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_event": { "type": "string" },
+                  "discription": { "type": "string" },
+                  "address": { "type": "string" },
+                  "city": { "type": "string" },
+                  "date_event": { "type": "string" }
+                },
+                "required": [
+                  "name_event",
+                  "discription",
+                  "address",
+                  "city",
+                  "date_event"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Evento criado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/event/{id_event}": {
+      "get": {
+        "summary": "Obtém um evento pelo ID",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes do evento",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Event"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Evento não encontrado"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza um evento existente",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_event": { "type": "string" },
+                  "discription": { "type": "string" },
+                  "address": { "type": "string" },
+                  "city": { "type": "string" },
+                  "date_event": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Evento atualizado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta um evento existente",
+        "tags": ["Events"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id_event",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Evento deletado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/attractions": {
+      "get": {
+        "summary": "Obtém a lista de atrações",
+        "tags": ["Attractions"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Lista de atrações",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Attraction"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova atração",
+        "tags": ["Attractions"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "hours": { "type": "string" },
+                  "date": { "type": "string" },
+                  "discription": { "type": "string" },
+                  "limit": { "type": "integer" },
+                  "active": { "type": "boolean" },
+                  "indicated_classification": { "type": "integer" },
+                  "event_id": { "type": "integer" }
+                },
+                "required": [
+                  "name",
+                  "hours",
+                  "date",
+                  "discription",
+                  "limit",
+                  "active",
+                  "indicated_classification",
+                  "event_id"
+                ]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Atração criada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/attractions/{id}": {
+      "get": {
+        "summary": "Obtém uma atração pelo ID",
+        "tags": ["Attractions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da atração",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Attraction"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Atração não encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza uma atração existente",
+        "tags": ["Attractions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "hours": { "type": "string" },
+                  "date": { "type": "string" },
+                  "discription": { "type": "string" },
+                  "limit": { "type": "integer" },
+                  "active": { "type": "boolean" },
+                  "indicated_classification": { "type": "integer" },
+                  "event_id": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Atração atualizada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma atração existente",
+        "tags": ["Attractions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Atração deletada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/inscriptions": {
+      "get": {
+        "summary": "Obtém a lista de inscrições",
+        "tags": ["Inscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "200": {
+            "description": "Lista de inscrições",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/Inscription"
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "summary": "Cria uma nova inscrição",
+        "tags": ["Inscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "age": { "type": "integer" },
+                  "attractionId": { "type": "integer" },
+                  "rgImage": { "type": "string", "format": "binary" }
+                },
+                "required": ["name", "age", "attractionId", "rgImage"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Inscrição criada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/inscriptions/{id}": {
+      "get": {
+        "summary": "Obtém uma inscrição pelo ID",
+        "tags": ["Inscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Detalhes da inscrição",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Inscription"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Inscrição não encontrada"
+          }
+        }
+      },
+      "put": {
+        "summary": "Atualiza uma inscrição existente",
+        "tags": ["Inscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name": { "type": "string" },
+                  "age": { "type": "integer" },
+                  "attractionId": { "type": "integer" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Inscrição atualizada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Deleta uma inscrição existente",
+        "tags": ["Inscriptions"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Inscrição deletada com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/role": {
+      "post": {
+        "summary": "Cria um novo papel",
+        "tags": ["Authorization"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_role": { "type": "string" },
+                  "discription_role": { "type": "string" }
+                },
+                "required": ["name_role", "discription_role"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Papel criado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    },
+    "/role/{id_role}": {
+      "put": {
+        "summary": "Atualiza um papel existente",
+        "tags": ["Authorization"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id_role",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "integer" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "name_role": { "type": "string" },
+                  "discription_role": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Papel atualizado com sucesso"
+          },
+          "400": {
+            "description": "Erro na requisição"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "email": { "type": "string" }
+        }
+      },
+      "Event": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "date": { "type": "string" },
+          "location": { "type": "string" },
+          "active": { "type": "boolean" }
+        }
+      },
+      "Attraction": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "hours": { "type": "string" },
+          "date": { "type": "string" },
+          "discription": { "type": "string" },
+          "limit": { "type": "integer" },
+          "active": { "type": "boolean" },
+          "indicated_classification": { "type": "integer" },
+          "event_id": { "type": "integer" }
+        }
+      },
+      "Inscription": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer" },
+          "name": { "type": "string" },
+          "age": { "type": "integer" },
+          "attractionId": { "type": "integer" }
+        }
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  }
+}

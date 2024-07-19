@@ -2,6 +2,8 @@ import express, { Request, Response, NextFunction } from "express";
 import "express-async-errors";
 import cors from "cors";
 import * as dotenv from "dotenv";
+import swagger from "swagger-ui-express"
+import swaggerDocs from "../swagger.json"
 import { router } from "./routes";
 
 
@@ -12,7 +14,7 @@ const app = express();
 app.use(express.json());
 
 app.use(cors());
-
+app.use("/api-docs", swagger.serve, swagger.setup(swaggerDocs))
 app.use(router);
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
